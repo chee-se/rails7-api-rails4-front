@@ -1,23 +1,39 @@
 version: "3.9"
 
 services:
-  app:
+  api:
     build:
       context: .
       args:
-        - RUBY_VERSION=${COMPOSE_RUBY_VERSION} # defined in .env file
+        - RUBY_VERSION=${COMPOSE_API_RUBY_VERSION} # defined in .env file
         - ALPINE_VERSION=${COMPOSE_ALPINE_VERSION}
+    working_dir: /api
     command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0" # 最初はコマンド引数で rails new に上書する。
     environment:
       - DATABASE_URL=mysql2://app_root:password@db:3306/app_local # database.yml を無視して接続する
     volumes:
-      - .:/app:cached # ホストへの反映の遅延を許容して高速化する
+      - ./api:/api:cached # ホストへの反映の遅延を許容して高速化する
     volumes_from:
       - datastore
     ports:
       - "3000:3000"
     depends_on:
       - db
+
+  app:
+    build:
+      context: .
+      args:
+        - RUBY_VERSION=${COMPOSE_APP_RUBY_VERSION} # defined in .env file
+        - ALPINE_VERSION=${COMPOSE_APP_ALPINE_VERSION}
+    working_dir: /app
+    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0" # 最初はコマンド引数で rails new に上書する。
+    volumes:
+      - ./app:/app:cached # ホストへの反映の遅延を許容して高速化する
+    volumes_from:
+      - datastore
+    ports:
+      - "3003:3000"
 
   db:
     image: mysql:${COMPOSE_MYSQL_VERSION}
@@ -36,13 +52,22 @@ services:
     image: alpine:${COMPOSE_ALPINE_VERSION}
     volumes:
       - mysql-data:/var/lib/mysql
-      - vendor-bundle:/app/vendor/bundle
-      - bundle:/app/.bundle
+      - app-vendor-bundle:/app/vendor/bundle
+      - app-vendor-assets:/app/vendor/assets
+      - api-vendor-bundle:/api/vendor/bundle
+      - app-bundle:/app/.bundle
+      - api-bundle:/api/.bundle
 
 volumes:
   mysql-data:
     driver: local
-  vendor-bundle:
+  app-vendor-bundle:
     driver: local
-  bundle:
+  app-vendor-assets:
+    driver: local
+  api-vendor-bundle:
+    driver: local
+  app-bundle:
+    driver: local
+  api-bundle:
     driver: local

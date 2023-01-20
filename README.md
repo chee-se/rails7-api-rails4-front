@@ -5,6 +5,14 @@ for create new repository from this template.
 ## Versions(.env file)
 
 - Docker Compose 3.9
+
+### APP
+
+- ruby 2.2
+- Ruby on Rails 4.3
+
+### API
+
 - ruby 3.2
 - Ruby on Rails 7.0
 - MySQL 8.0
@@ -32,7 +40,8 @@ gem 'rails', '~> 7.0.4'
 
 ```shell
 # create rails project
-docker-compose run --rm --no-deps app bundle exec rails new . -d mysql
+docker-compose run --rm api bundle exec rails new . --api -d mysql
+docker-compose run --rm app bundle exec rails new . --skip-activerecord
 ```
 
 if you clone existing rails project by cloning repository

@@ -5,8 +5,12 @@ FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION
 
 # ENVはコンテナ内で環境変数として使いたい定数を指定する。ビルドのみ必要な定数はARGで十分
 # key=valueの形にすることで一度に複数定義可能。レイヤーも一つで済む
-ENV LANG=ja-JP.UTF-8 \
+ENV APP_ROOT=/api \
+    LANG=ja-JP.UTF-8 \
     TZ=Asia/Tokyo
+
+# RUN mkdir は WORKDIR で省略できる
+WORKDIR $APP_ROOT
 
 # 結果が変わらなそうなものから先に実行する
 # gem インストール
