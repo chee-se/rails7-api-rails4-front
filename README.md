@@ -1,6 +1,6 @@
 # docker-rails-template
 
-for create new repository from this template.
+[Research Project for ActiveResource::eyes:](https://github.com/chee-se/study-memo/blob/main/my-practice/ruby-on-rails/active-resource.md)
 
 ## Versions(.env file)
 
