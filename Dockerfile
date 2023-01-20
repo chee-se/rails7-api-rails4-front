@@ -17,6 +17,7 @@ RUN echo 'install: --no-document' > ~/.gemrc && \
         build-base \
         mysql-dev \
         tzdata \
+        nodejs\
         git && \
     rm -rf /usr/lib/libmysqld* && \
     rm -rf /usr/bin/mysql* && \
