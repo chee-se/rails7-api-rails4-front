@@ -1,4 +1,4 @@
-# docker-rails-template
+# Rails7-Api & Rails4-Front
 
 [Research Project for ActiveResource::eyes:](https://github.com/chee-se/study-memo/blob/main/my-practice/ruby-on-rails/active-resource.md)
 
