@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class User < ActiveResource::Base
+class Post < ActiveResource::Base
   self.site = "http://api:3000"
 
-  has_many :posts
+  belongs_to :user
 end
