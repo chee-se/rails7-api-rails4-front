@@ -10,6 +10,7 @@
       <th>Nickname</th>
       <th>Email</th>
       <th>Age</th>
+      <th>Posts</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -22,6 +23,11 @@
         <td><%= user.nickname %></td>
         <td><%= user.email %></td>
         <td><%= user.age %></td>
+        <td>
+          <% user.posts.each do |post| %>
+            <%= link_to post.title, post %>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
